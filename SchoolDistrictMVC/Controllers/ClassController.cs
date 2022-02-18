@@ -1,11 +1,13 @@
 ﻿using SchoolDistrictMVC.Data;
 using SchoolDistrictMVC.Models;
 using SchoolDistrictMVC.Models.Class;
+using SchoolDistrictMVC.Models.Enrollment;
 using SchoolDistrictMVC.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace SchoolDistrictMVC.Controllers
@@ -45,7 +47,7 @@ namespace SchoolDistrictMVC.Controllers
             return View();
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ClassCreate c)
         {
@@ -106,7 +108,7 @@ namespace SchoolDistrictMVC.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ClassEdit c)
         {
@@ -140,6 +142,50 @@ namespace SchoolDistrictMVC.Controllers
             return View(model);
         }
 
+        public ActionResult AddToClassRoster()
+        {
+            List<Student> Students = new StudentService().GetStudents().ToList();
+
+            var query = from s in Students
+                        select new SelectListItem()
+                        {
+                            Value = s.Id.ToString(),
+                            Text = s.FullName,
+                        };
+
+            List<Class> Classes = new ClassService().GetClasses().ToList();
+
+            var query2 = from s in Classes
+                         select new SelectListItem()
+                         {
+                             Value = s.Id.ToString(),
+                             Text = s.Name,
+                         };
+
+            ViewBag.StudentId = query.ToList();
+            ViewBag.ClassId = query2.ToList();
+
+            return View();
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddToClassRoster(EnrollmentCreate enroll, [FromUri]int id)
+        {
+            if (!ModelState.IsValid) return View(enroll);
+
+            var service = CreateEnrollmentService();
+
+            if (service.CreateEnrollment(enroll, id))
+            {
+                TempData["SaveResult"] = $"Assignment successful.";
+                return RedirectToAction("Index");
+            };
+
+            ModelState.AddModelError("", $"Assignment unsuccessful");
+            return View(enroll);
+        }
+
         public ActionResult Delete(int id)
         {
             var svc = CreateClassService();
@@ -148,8 +194,8 @@ namespace SchoolDistrictMVC.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ActionName("Delete")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteClass(int id)
         {
@@ -165,6 +211,12 @@ namespace SchoolDistrictMVC.Controllers
         private ClassService CreateClassService()
         {
             var service = new ClassService();
+            return service;
+        }
+
+        private EnrollmentService CreateEnrollmentService()
+        {
+            var service = new EnrollmentService();
             return service;
         }
     }

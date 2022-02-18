@@ -60,7 +60,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Add/Remove Students", "Index", "Enrollment") |
+            @Html.ActionLink("Add Students", "AddToClassRoster", new { id = item.Id }) |
             @Html.ActionLink("View Class Roster", "ViewClassRoster", new { id = item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>

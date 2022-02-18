@@ -44,7 +44,7 @@ namespace SchoolDistrictMVC.Controllers
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EnrollmentCreate student)
         {
@@ -60,7 +60,7 @@ namespace SchoolDistrictMVC.Controllers
 
             ModelState.AddModelError("", $"Assignment unsuccessful");
             return View(student);
-        }
+        }*/
 
         public ActionResult Details(int id)
         {

@@ -11,12 +11,12 @@ namespace SchoolDistrictMVC.Services
 {
     public class EnrollmentService
     {
-        public bool CreateEnrollment(EnrollmentCreate enroll)
+        public bool CreateEnrollment(EnrollmentCreate enroll, int id)
         {
             var entity = new Enrollment()
             {
                 StudentId = enroll.StudentId,
-                ClassId = enroll.ClassId,
+                ClassId = id
             };
 
             using (var ctx = new ApplicationDbContext())
