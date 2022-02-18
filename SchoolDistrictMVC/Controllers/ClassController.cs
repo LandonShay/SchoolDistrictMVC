@@ -47,7 +47,7 @@ namespace SchoolDistrictMVC.Controllers
             return View();
         }
 
-        [System.Web.Http.HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ClassCreate c)
         {
@@ -108,7 +108,7 @@ namespace SchoolDistrictMVC.Controllers
             return View(model);
         }
 
-        [System.Web.Http.HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ClassEdit c)
         {
@@ -194,8 +194,8 @@ namespace SchoolDistrictMVC.Controllers
             return View(model);
         }
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.ActionName("Delete")]
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteClass(int id)
         {
