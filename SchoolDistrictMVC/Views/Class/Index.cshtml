@@ -11,8 +11,7 @@
         <span>&times;</span>
     </button>
     @TempData["SaveResult"]
-</div>
-}
+</div>}
 
 <div class="createButton">
     <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Class")'">Create New Class</button>
@@ -42,29 +41,39 @@
 
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.School)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Teacher)
-        </td>
-        <td>
-            @Html.ActionLink("Edit Class", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Add Students", "AddToClassRoster", new { id = item.Id }) |
-            @Html.ActionLink("View Class Roster", "ViewClassRoster", new { id = item.Id }) |
-            @Html.ActionLink("Delete Class", "Delete", new { id = item.Id })
-        </td>
-    </tr>}
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Subject)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.School)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Teacher)
+    </td>
+    <td>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Options
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>@Html.ActionLink("Edit Class", "Edit", new { id = item.Id })</li>
+                <li>@Html.ActionLink("Add Students", "AddToClassRoster", new { id = item.Id })</li>
+                <li>@Html.ActionLink("View Class Roster", "ViewClassRoster", new { id = item.Id })</li>
+                <li>@Html.ActionLink("Delete Class", "Delete", new { id = item.Id })</li>
+            </ul>
+        </div>
+
+    </td>
+</tr>
+}
 
     </table>
 </div>
