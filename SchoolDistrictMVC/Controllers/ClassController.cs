@@ -186,6 +186,28 @@ namespace SchoolDistrictMVC.Controllers
             return View(enroll);
         }
 
+        public ActionResult RemoveFromClass(int id)
+        {
+            var svc = CreateEnrollmentService();
+            var model = svc.GetEnrollmentById(id);
+
+            return View(model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("RemoveFromClass")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteEnrollment(int id)
+        {
+            var service = CreateEnrollmentService();
+
+            service.DeleteEnrollment(id);
+
+            TempData["SaveResult"] = "The student was successfully removed from the class";
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Delete(int id)
         {
             var svc = CreateClassService();

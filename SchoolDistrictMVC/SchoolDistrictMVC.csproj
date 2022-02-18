@@ -274,6 +274,7 @@
     <Content Include="Views\Enrollment\Delete.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Class\AddToClassRoster.cshtml" />
+    <Content Include="Views\Class\RemoveFromClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

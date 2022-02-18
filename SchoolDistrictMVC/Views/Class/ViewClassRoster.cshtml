@@ -43,6 +43,10 @@
     <td>
         @Html.DisplayFor(modelItem => item.Student)
     </td>
+    <td>
+        @Html.ActionLink("Remove From Class", "RemoveFromClass", new { id = item.Id })
+    </td>
+
 </tr>}
 
 </table>

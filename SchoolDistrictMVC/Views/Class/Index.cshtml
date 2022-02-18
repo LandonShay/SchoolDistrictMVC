@@ -59,10 +59,10 @@
             @Html.DisplayFor(modelItem => item.Teacher)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Edit Class", "Edit", new { id = item.Id }) |
             @Html.ActionLink("Add Students", "AddToClassRoster", new { id = item.Id }) |
             @Html.ActionLink("View Class Roster", "ViewClassRoster", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.ActionLink("Delete Class", "Delete", new { id = item.Id })
         </td>
     </tr>}
 
