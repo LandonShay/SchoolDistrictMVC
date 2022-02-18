@@ -57,7 +57,9 @@ namespace SchoolDistrictMVC.Services
                 {
                     Id = entity.Id,
                     StudentId = entity.StudentId,
-                    ClassId = entity.ClassId
+                    ClassId = entity.ClassId,
+                    StudentName = entity.Student.FullName,
+                    ClassName = entity.Class.Name
                 };
             }
         }
