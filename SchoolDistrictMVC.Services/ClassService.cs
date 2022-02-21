@@ -85,7 +85,7 @@ namespace SchoolDistrictMVC.Services
             }
         }
 
-       public ICollection<ClassRoster> GetClassLineup(ClassRoster roster)
+        /* public ICollection<ClassRoster> GetClassLineup(ClassRoster roster)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -100,6 +100,31 @@ namespace SchoolDistrictMVC.Services
                 }).ToList().Where(i => i.ClassId == roster.Id);
 
                 return query.ToList();
+            }
+        }
+        */
+
+        public ClassRosterRedo GetClassRoster(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.Classes.Where(c => c.Id == id).First();
+
+                var roster = new ClassRosterRedo
+                {
+                    ClassId = query.Id,
+                    Name = query.Name,
+                    Teacher = query.Teacher.FullName,
+                    Students = query.Enrollment.Select(s => new Models.Student.StudentListItem
+                    {
+                        Id = s.Id,
+                        Name = s.Student.FullName,
+                        DateOfBirth = s.Student.DateOfBirth,
+                        School = s.Student.School.Name,
+                        Grade = s.Student.Grade,
+                    }).ToList()
+                };
+                return roster;
             }
         }
 

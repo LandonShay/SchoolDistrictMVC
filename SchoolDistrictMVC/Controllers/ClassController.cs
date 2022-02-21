@@ -110,37 +110,34 @@ namespace SchoolDistrictMVC.Controllers
 
         [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ClassEdit c)
+        public ActionResult Edit(int id, ClassEdit @class)
         {
-            if (!ModelState.IsValid) return View(c);
+            if (!ModelState.IsValid) return View(@class);
 
-            if (c.Id != id)
+            if (@class.Id != id)
             {
                 ModelState.AddModelError("", "Id Mismatch");
-                return View(c);
+                return View(@class);
             }
 
             var service = CreateClassService();
 
-            if (service.UpdateClass(c))
+            if (service.UpdateClass(@class))
             {
-                TempData["SaveResult"] = $"{c.Name} was successfully updated.";
+                TempData["SaveResult"] = $"{@class.Name} was successfully updated.";
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError("", $"{c.Name} could not be updated.");
+            ModelState.AddModelError("", $"{@class.Name} could not be updated.");
             return View();
         }
 
-        public ActionResult ViewClassRoster(ClassRoster c)
+        public ActionResult ViewClassRoster(int id)
         {
             var svc = CreateClassService();
-            var model = svc.GetClassLineup(c);
+            var model = svc.GetClassRoster(id);
 
-            string name = model.First().Name;
-            string teacher = model.First().Teacher;
-
-            ViewBag.Class = $"{name}";
-            ViewBag.Teacher = $"{teacher}";
+            ViewBag.Class = $"{model.Name}";
+            ViewBag.Teacher = $"{model.Teacher}";
 
             return View(model);
         }

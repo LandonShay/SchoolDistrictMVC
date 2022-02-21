@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\ClassRosterRedo.cs" />
     <Compile Include="Class\ClassCreate.cs" />
     <Compile Include="Class\ClassDetail.cs" />
     <Compile Include="Class\ClassEdit.cs" />

@@ -23,16 +23,16 @@
     <table class="table table-striped table-hover">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["IDSort"]">@Html.DisplayNameFor(model => model.Id)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a asp-action="Index" asp-route-sortOrder="'@ViewData["NameSort"]'">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSort"]">@Html.DisplayNameFor(model => model.DateOfBirth)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.School)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SchoolSort"]">@Html.DisplayNameFor(model => model.School)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Grade)

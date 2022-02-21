@@ -1,4 +1,5 @@
 ﻿using SchoolDistrictMVC.Data;
+using SchoolDistrictMVC.Models;
 using SchoolDistrictMVC.Models.Student;
 using SchoolDistrictMVC.Services;
 using System;
@@ -11,11 +12,50 @@ namespace SchoolDistrictMVC.Controllers
 {
     public class StudentController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            var service = CreateStudentService();
-            var model = service.GetStudentList();
+            using (var ctx = new ApplicationDbContext())
+            {
+                var service = CreateStudentService();
+                var model = service.GetStudentList();
+
+                ViewData["IDSort"] = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
+                ViewData["NameSort"] = sortOrder == "name" ? "nameDescending" : "name";
+                ViewData["DateSort"] = sortOrder == "date" ? "dateDescending" : "date";
+                ViewData["SchoolSort"] = sortOrder == "school" ? "schoolDescending" : "school";
+
+                var students = from s in ctx.Students select s;
+
+                switch (sortOrder)
+                {
+                    case "name":
+                        students = students.OrderBy(s => s.FullName);
+                        break;
+                    case "nameDescending":
+                        students = students.OrderByDescending(s => s.FullName);
+                        break;
+                    case "date":
+                        students = students.OrderBy(s => s.DateOfBirth);
+                        break;
+                    case "dateDescending":
+                        students = students.OrderByDescending(s => s.DateOfBirth);
+                        break;
+                    case "school":
+                        students = students.OrderBy(s => s.School);
+                        break;
+                    case "schoolDescending":
+                        students = students.OrderByDescending(s => s.School);
+                        break;
+                    case "idDescending":
+                        students = students.OrderByDescending(s => s.Id);
+                        break;
+                    default:
+                        students = students.OrderBy(s => s.Id);
+                        break;
+                }
+
             return View(model);
+            }
         }
 
         public ActionResult Create()
