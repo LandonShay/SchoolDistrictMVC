@@ -12,27 +12,34 @@ namespace SchoolDistrictMVC.Controllers
 {
     public class StudentController : Controller
     {
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, int page = 1)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var service = CreateStudentService();
                 var model = service.GetStudentList();
 
-                ViewData["IDSort"] = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
-                ViewData["NameSort"] = sortOrder == "name" ? "nameDescending" : "name";
-                ViewData["DateSort"] = sortOrder == "date" ? "dateDescending" : "date";
-                ViewData["SchoolSort"] = sortOrder == "school" ? "schoolDescending" : "school";
+                int itemsPerPage = 10;
 
-                var students = from s in ctx.Students select s;
+                int start = (page - 1) * itemsPerPage;
+
+                var items = model;
+                ViewBag.PageCount = Math.Ceiling(items.Count() / (double)itemsPerPage);
+
+                ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
+                ViewBag.NameSort = sortOrder == "name" ? "nameDescending" : "name";
+                ViewBag.DateSort = sortOrder == "date" ? "dateDescending" : "date";
+                ViewBag.SchoolSort = sortOrder == "school" ? "schoolDescending" : "school";
+
+                var students = from s in model select s;
 
                 switch (sortOrder)
                 {
                     case "name":
-                        students = students.OrderBy(s => s.FullName);
+                        students = students.OrderBy(s => s.Name);
                         break;
                     case "nameDescending":
-                        students = students.OrderByDescending(s => s.FullName);
+                        students = students.OrderByDescending(s => s.Name);
                         break;
                     case "date":
                         students = students.OrderBy(s => s.DateOfBirth);
@@ -54,7 +61,7 @@ namespace SchoolDistrictMVC.Controllers
                         break;
                 }
 
-            return View(model);
+            return View(students.ToList().Skip(start).Take(itemsPerPage));
             }
         }
 

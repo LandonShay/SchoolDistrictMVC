@@ -32,4 +32,9 @@ table {
     margin-bottom: 10px;
 }
 
+.sortButton {
+    position: relative;
+    float: right;
+}
+
 
