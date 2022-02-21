@@ -4,15 +4,14 @@
     ViewBag.Title = "AddToClassRoster";
 }
 
-<h2>AddToClassRoster</h2>
-
+<h2>Add To Class</h2>
+<hr />
+<br />
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EnrollmentCreate</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.StudentId, htmlAttributes: new { @class = "control-label col-md-2" })

@@ -40,6 +40,7 @@ namespace SchoolDistrictMVC.Services
                     School = c.School.Name,
                     Teacher = c.Teacher.FullName,
                     Subject = c.Subject,
+                    NumberOfStudents = c.Enrollment.Count
                 });
                 return query.ToArray();
             }

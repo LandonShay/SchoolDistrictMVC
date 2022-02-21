@@ -15,5 +15,7 @@ namespace SchoolDistrictMVC.Models.Class
 		public string Name { get; set; }
 		public string School { get; set; }
 		public string Teacher { get; set; }
+		[Display(Name = "# of Students")]
+		public int NumberOfStudents { get; set; }
 	}
 }
