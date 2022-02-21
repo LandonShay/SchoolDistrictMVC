@@ -136,8 +136,11 @@ namespace SchoolDistrictMVC.Controllers
             var svc = CreateClassService();
             var model = svc.GetClassLineup(c);
 
-            ViewBag.Class = $"{c.Name}";
-            ViewBag.Teacher = $"{c.Teacher}";
+            string name = model.First().Name;
+            string teacher = model.First().Teacher;
+
+            ViewBag.Class = $"{name}";
+            ViewBag.Teacher = $"{teacher}";
 
             return View(model);
         }

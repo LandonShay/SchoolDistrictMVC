@@ -10,6 +10,7 @@ namespace SchoolDistrictMVC.Models.Enrollment
     public class EnrollmentCreate
     {
         public int Id { get; set; }
+        [Display(Name = "Student")]
         public int StudentId { get; set; }
         public int ClassId { get; set; }
     }
