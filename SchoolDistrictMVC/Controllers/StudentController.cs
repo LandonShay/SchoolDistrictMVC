@@ -1,4 +1,5 @@
-﻿using SchoolDistrictMVC.Data;
+﻿using PagedList;
+using SchoolDistrictMVC.Data;
 using SchoolDistrictMVC.Models;
 using SchoolDistrictMVC.Models.Student;
 using SchoolDistrictMVC.Services;
@@ -12,26 +13,35 @@ namespace SchoolDistrictMVC.Controllers
 {
     public class StudentController : Controller
     {
-        public ActionResult Index(string sortOrder, int page = 1)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var service = CreateStudentService();
                 var model = service.GetStudentList();
 
-                int itemsPerPage = 10;
-
-                int start = (page - 1) * itemsPerPage;
-
-                var items = model;
-                ViewBag.PageCount = Math.Ceiling(items.Count() / (double)itemsPerPage);
-
                 ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
                 ViewBag.NameSort = sortOrder == "name" ? "nameDescending" : "name";
                 ViewBag.DateSort = sortOrder == "date" ? "dateDescending" : "date";
                 ViewBag.SchoolSort = sortOrder == "school" ? "schoolDescending" : "school";
 
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
                 var students = from s in model select s;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    students = students.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
+                }
 
                 switch (sortOrder)
                 {
@@ -60,8 +70,9 @@ namespace SchoolDistrictMVC.Controllers
                         students = students.OrderBy(s => s.Id);
                         break;
                 }
-
-            return View(students.ToList().Skip(start).Take(itemsPerPage));
+                int pageSize = 8;
+                int pageNumber = (page ?? 1);
+                return View(students.ToPagedList(pageNumber, pageSize));
             }
         }
 
