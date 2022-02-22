@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
+using PagedList;
+using SchoolDistrictMVC.Models;
 using SchoolDistrictMVC.Models.School;
 using SchoolDistrictMVC.Services;
 using System;
@@ -11,11 +13,53 @@ namespace SchoolDistrictMVC.Controllers
 {
     public class SchoolController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var service = CreateSchoolService();
-            var model = service.GetSchoolsList();
-            return View(model);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var service = CreateSchoolService();
+                var model = service.GetSchoolsList();
+
+                ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
+                ViewBag.NameSort = sortOrder == "name" ? "nameDescending" : "name";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                var schools = from s in model select s;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    schools = schools.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
+                }
+
+                switch (sortOrder)
+                {
+                    case "name":
+                        schools = schools.OrderBy(s => s.Name);
+                        break;
+                    case "nameDescending":
+                        schools = schools.OrderByDescending(s => s.Name);
+                        break;
+                    case "idDescending":
+                        schools = schools.OrderByDescending(s => s.Id);
+                        break;
+                    default:
+                        schools = schools.OrderBy(s => s.Id);
+                        break;
+                }
+                int pageSize = 8;
+                int pageNumber = (page ?? 1);
+                return View(schools.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public ActionResult Create()

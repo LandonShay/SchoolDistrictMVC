@@ -1,4 +1,5 @@
-﻿using SchoolDistrictMVC.Data;
+﻿using PagedList;
+using SchoolDistrictMVC.Data;
 using SchoolDistrictMVC.Models;
 using SchoolDistrictMVC.Models.Class;
 using SchoolDistrictMVC.Models.Enrollment;
@@ -14,11 +15,67 @@ namespace SchoolDistrictMVC.Controllers
 {
     public class ClassController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var service = CreateClassService();
-            var model = service.GetClassList();
-            return View(model);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var service = CreateClassService();
+                var model = service.GetClassList();
+
+                ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
+                ViewBag.SubjectSort = sortOrder == "subject" ? "subjectDescending" : "subject";
+                ViewBag.SchoolSort = sortOrder == "school" ? "schoolDescending" : "school";
+                ViewBag.TeacherSort = sortOrder == "teacher" ? "teacherDescending" : "teacher";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                var classes = from c in model select c;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    classes = classes.Where(c => c.Name.ToLower().Contains(searchString.ToLower()));
+                }
+
+                switch (sortOrder)
+                {
+                    case "teacher":
+                        classes = classes.OrderBy(s => s.Teacher);
+                        break;
+                    case "teacherDescending":
+                        classes = classes.OrderByDescending(s => s.Teacher);
+                        break;
+                    case "subject":
+                        classes = classes.OrderBy(s => s.Subject);
+                        break;
+                    case "subjectDescending":
+                        classes = classes.OrderByDescending(s => s.Subject);
+                        break;
+                    case "school":
+                        classes = classes.OrderBy(s => s.School);
+                        break;
+                    case "schoolDescending":
+                        classes = classes.OrderByDescending(s => s.School);
+                        break;
+                    case "idDescending":
+                        classes = classes.OrderByDescending(s => s.Id);
+                        break;
+                    default:
+                        classes = classes.OrderBy(s => s.Id);
+                        break;
+                }
+                int pageSize = 8;
+                int pageNumber = (page ?? 1);
+                return View(classes.ToPagedList(pageNumber, pageSize));
+            }
         }
 
         public ActionResult Create()

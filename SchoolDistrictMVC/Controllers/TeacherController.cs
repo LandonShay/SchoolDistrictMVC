@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
+using PagedList;
 using SchoolDistrictMVC.Data;
+using SchoolDistrictMVC.Models;
 using SchoolDistrictMVC.Models.Teacher;
 using SchoolDistrictMVC.Services;
 using System;
@@ -12,11 +14,69 @@ namespace SchoolDistrictMVC.Controllers
 {
     public class TeacherController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var service = CreateTeacherService();
-            var model = service.GetTeacherList();
-            return View(model);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var service = CreateTeacherService();
+                var model = service.GetTeacherList();
+
+                ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "idDescending" : "";
+                ViewBag.NameSort = sortOrder == "name" ? "nameDescending" : "name";
+                ViewBag.DateSort = sortOrder == "date" ? "dateDescending" : "date";
+                ViewBag.SchoolSort = sortOrder == "school" ? "schoolDescending" : "school";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                var teachers = from s in model select s;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    teachers = teachers.Where(t => t.Name.ToLower().Contains(searchString.ToLower()));
+                }
+
+                switch (sortOrder)
+                {
+                    case "name":
+                        teachers = teachers.OrderBy(t => t.Name);
+                        break;
+                    case "nameDescending":
+                        teachers = teachers.OrderByDescending(t => t.Name);
+                        break;
+                    case "date":
+                        teachers = teachers.OrderBy(t => t.DateOfBirth);
+                        break;
+                    case "dateDescending":
+                        teachers = teachers.OrderByDescending(s => s.DateOfBirth);
+                        break;
+                    case "school":
+                        teachers = teachers.OrderBy(t => t.School);
+                        break;
+                    case "schoolDescending":
+                        teachers = teachers.OrderByDescending(t => t.School);
+                        break;
+                    case "idDescending":
+                        teachers = teachers.OrderByDescending(t => t.Id);
+                        break;
+                    default:
+                        teachers = teachers.OrderBy(t => t.Id);
+                        break;
+                }
+
+                int pageSize = 8;
+                int pageNumber = (page ?? 1);
+                return View(teachers.ToPagedList(pageNumber, pageSize));
+
+            }
         }
 
         public ActionResult Create()
