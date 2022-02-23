@@ -1,6 +1,7 @@
 ﻿@model PagedList.IPagedList<SchoolDistrictMVC.Models.Class.ClassListItem>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 @{ ViewBag.Title = "Index"; }
 
 <h2>Classes</h2>
@@ -15,18 +16,15 @@
 </div>}
 
 <div class="createButton row">
-    <div class="col-lg-3">
-        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Class")'">Create New Class</button>
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12" id="colOne">
+        <form action="/Class" method="get">
+            <p>
+                <input id="SearchString" name="SearchString" type="text" value="" placeholder="Search">
+                <button type="submit" class="btn btn-default" id="searchButton">Search</button>
+            </p>
+        </form>
     </div>
-    <div class="col-lg-5">
-        @using (Html.BeginForm("Index", "Class", FormMethod.Get))
-        {
-<p>
-    Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-    <button type="submit" class="btn btn-default">Search</button>
-</p>}
-    </div>
-    <div class="col-lg-4">
+    <div class="col-lg-1 col-md-2 col-sm-1 col-xs-1">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Sort By
             <span class="caret"></span>
@@ -38,34 +36,38 @@
             <li>@Html.ActionLink("Teacher", "Index", new { sortOrder = ViewBag.TeacherSort, currentFilter = ViewBag.CurrentFilter })</li>
         </ul>
     </div>
+    <div class="col-lg-7 col-md-5 col-sm-5 col-xs-0" id="colThree">
+        <button type="button" class="btn addElement" onclick="location.href='@Url.Action("Create", "Class")'"><span class="glyphicon glyphicon-plus"></span> Create New Class</button>
+    </div>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>
-                <p>Id</p>
-            </th>
-            <th>
-                <p>Name</p>
-            </th>
-            <th>
-                <p>Subject</p>
-            </th>
-            <th>
-                <p>School</p>
-            </th>
-            <th>
-                <p>Teacher</p>
-            </th>
-            <th>
-                <p># of Students</p>
-            </th>
-            <th></th>
-        </tr>
+<div class="tableBox">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>
+                    <p>Id</p>
+                </th>
+                <th>
+                    <p>Name</p>
+                </th>
+                <th>
+                    <p>Subject</p>
+                </th>
+                <th>
+                    <p>School</p>
+                </th>
+                <th>
+                    <p>Teacher</p>
+                </th>
+                <th>
+                    <p># of Students</p>
+                </th>
+                <th></th>
+            </tr>
 
-        @foreach (var item in Model)
-        {
+            @foreach (var item in Model)
+            {
 <tr>
     <td>
         @Html.DisplayFor(modelItem => item.Id)
@@ -100,10 +102,10 @@
         </div>
 
     </td>
-</tr>
-}
+</tr>}
 
-    </table>
+        </table>
+    </div>
 </div>
 
 <br />

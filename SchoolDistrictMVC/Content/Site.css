@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-
+    background-color: #f6f8fa;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -24,17 +24,67 @@ textarea {
     max-width: 280px;
 }
 
-table {
-
+.navbar {
+    background-color: #00305b;
 }
 
-.createButton{
-    margin-bottom: 10px;
+.navbar a{
+    color: white;
 }
 
-.pageination{
-    position: relative;
-    float: right;
+.nav li a:hover {
+    background-color: #0174da
 }
+
+h2{
+    text-align: center
+}
+
+h3{
+    text-align: center
+}
+
+.tableBox{
+    background-color: white;
+    margin-top: 5px
+}
+
+#SearchString {
+    padding: .5em 8.7em .5em 0;
+    border-style: solid;
+    border-color: lightgrey;
+    border-radius: 5px;
+    text-indent: 15px
+}
+
+#searchButton{
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 2px;
+}
+
+#colOne{
+    padding-right: 0;
+}
+
+#colThree{
+    display: flex;
+    justify-content: right;
+}
+
+#dropdownMenu{
+    margin-top: 2px
+}
+
+.addElement {
+    background-color: #0174da;
+    color: white;
+    font-weight: 600;
+}
+
+    .addElement:hover {
+        color: white;
+        background-color: #1686ea
+    }
 
 
