@@ -85,25 +85,6 @@ namespace SchoolDistrictMVC.Services
             }
         }
 
-        /* public ICollection<ClassRoster> GetClassLineup(ClassRoster roster)
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var query = ctx.Enrollments.Select(e => new ClassRoster
-                {
-                    Id = e.Id,
-                    Student = e.Student.FullName,
-                    StudentId = e.Student.Id,
-                    ClassId = e.ClassId,
-                    Name = e.Class.Name,
-                    Teacher = e.Class.Teacher.FullName
-                }).ToList().Where(i => i.ClassId == roster.Id);
-
-                return query.ToList();
-            }
-        }
-        */
-
         public ClassRosterRedo GetClassRoster(int id)
         {
             using (var ctx = new ApplicationDbContext())
