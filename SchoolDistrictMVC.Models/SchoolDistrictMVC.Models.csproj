@@ -93,6 +93,7 @@
     <Compile Include="School\SchoolDetail.cs" />
     <Compile Include="School\SchoolEdit.cs" />
     <Compile Include="School\SchoolListItem.cs" />
+    <Compile Include="Student\StudentClasses.cs" />
     <Compile Include="Student\StudentCreate.cs" />
     <Compile Include="Student\StudentDetail.cs" />
     <Compile Include="Student\StudentEdit.cs" />

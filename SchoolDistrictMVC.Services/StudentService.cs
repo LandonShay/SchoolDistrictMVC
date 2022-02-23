@@ -70,6 +70,24 @@ namespace SchoolDistrictMVC.Services
             }
         }
 
+        public IEnumerable<StudentClasses> ViewClasses(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.Enrollments.Select(s => new StudentClasses
+                {
+                    Id = s.Id,
+                    Class = s.Class.Name,
+                    ClassId = s.ClassId,
+                    Teacher = s.Class.Teacher.FullName,
+                    StudentId = s.StudentId,
+                    Student = s.Student.FullName,
+                }).Where(c => c.StudentId == id);
+
+                return query.ToArray();
+            }
+        }
+
         public bool UpdateStudent(StudentEdit student)
         {
             using (var ctx = new ApplicationDbContext())
