@@ -103,7 +103,7 @@ namespace SchoolDistrictMVC.Services
                         DateOfBirth = s.Student.DateOfBirth,
                         School = s.Student.School.Name,
                         Grade = s.Student.Grade,
-                    }).ToList()
+                    }).OrderBy(s => s.Name).ToList()
                 };
                 return roster;
             }

@@ -84,7 +84,7 @@ namespace SchoolDistrictMVC.Services
                     Student = s.Student.FullName,
                 }).Where(c => c.StudentId == id);
 
-                return query.ToArray();
+                return query.ToArray().OrderBy(s => s.Class);
             }
         }
 
