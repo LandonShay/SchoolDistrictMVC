@@ -122,6 +122,14 @@ namespace SchoolDistrictMVC.Controllers
             return View(model);
         }
 
+        public ActionResult ViewClasses(int id)
+        {
+            var svc = CreateTeacherService();
+            var model = svc.ViewClasses(id);
+
+            return View(model);
+        }
+
         public ActionResult Edit(int id)
         {
             var service = CreateTeacherService();

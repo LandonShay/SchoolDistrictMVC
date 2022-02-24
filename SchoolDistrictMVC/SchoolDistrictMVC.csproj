@@ -388,6 +388,7 @@
     <Content Include="Views\Class\RemoveFromClass.cshtml" />
     <Content Include="Views\Class\ViewClassRoster.cshtml" />
     <Content Include="Views\Student\ViewClasses.cshtml" />
+    <Content Include="Views\Teacher\ViewClasses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

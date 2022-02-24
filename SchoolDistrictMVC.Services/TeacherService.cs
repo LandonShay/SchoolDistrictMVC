@@ -67,6 +67,24 @@ namespace SchoolDistrictMVC.Services
             }
         }
 
+        public IEnumerable<TeacherClasses> ViewClasses(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.Classes.Select(s => new TeacherClasses
+                {
+                    Id = s.Id,
+                    Class = s.Name,
+                    ClassId = s.Id,
+                    Teacher = s.Teacher.FullName,
+                    TeacherId = s.TeacherId,
+                    School = s.School.Name
+                }).Where(c => c.TeacherId == id);
+
+                return query.ToArray().OrderBy(s => s.Class);
+            }
+        }
+
         public bool UpdateTeacher(TeacherEdit teacher)
         {
             using (var ctx = new ApplicationDbContext())

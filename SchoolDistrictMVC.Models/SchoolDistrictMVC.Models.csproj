@@ -98,6 +98,7 @@
     <Compile Include="Student\StudentDetail.cs" />
     <Compile Include="Student\StudentEdit.cs" />
     <Compile Include="Student\StudentListItem.cs" />
+    <Compile Include="Teacher\TeacherClasses.cs" />
     <Compile Include="Teacher\TeacherCreate.cs" />
     <Compile Include="Teacher\TeacherDetail.cs" />
     <Compile Include="Teacher\TeacherEdit.cs" />
