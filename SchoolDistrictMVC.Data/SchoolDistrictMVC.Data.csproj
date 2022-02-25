@@ -59,25 +59,9 @@
   <ItemGroup>
     <Compile Include="Class.cs" />
     <Compile Include="Enrollment.cs" />
-    <Compile Include="Migrations\202202142115281_Init.cs" />
-    <Compile Include="Migrations\202202142115281_Init.designer.cs">
-      <DependentUpon>202202142115281_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202202151925043_AddedClass.cs" />
-    <Compile Include="Migrations\202202151925043_AddedClass.designer.cs">
-      <DependentUpon>202202151925043_AddedClass.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202202161656362_AddedEnrollment.cs" />
-    <Compile Include="Migrations\202202161656362_AddedEnrollment.designer.cs">
-      <DependentUpon>202202161656362_AddedEnrollment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202202162040088_FixedIds.cs" />
-    <Compile Include="Migrations\202202162040088_FixedIds.designer.cs">
-      <DependentUpon>202202162040088_FixedIds.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202202162113395_FixedIds1.cs" />
-    <Compile Include="Migrations\202202162113395_FixedIds1.designer.cs">
-      <DependentUpon>202202162113395_FixedIds1.cs</DependentUpon>
+    <Compile Include="Migrations\202202250611526_Initial.cs" />
+    <Compile Include="Migrations\202202250611526_Initial.designer.cs">
+      <DependentUpon>202202250611526_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="School.cs" />
@@ -91,20 +75,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202202142115281_Init.resx">
-      <DependentUpon>202202142115281_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202151925043_AddedClass.resx">
-      <DependentUpon>202202151925043_AddedClass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202161656362_AddedEnrollment.resx">
-      <DependentUpon>202202161656362_AddedEnrollment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202162040088_FixedIds.resx">
-      <DependentUpon>202202162040088_FixedIds.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202162113395_FixedIds1.resx">
-      <DependentUpon>202202162113395_FixedIds1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202202250611526_Initial.resx">
+      <DependentUpon>202202250611526_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
